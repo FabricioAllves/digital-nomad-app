@@ -1,9 +1,13 @@
-import theme from "@/src/theme/theme"
-import { ThemeContext } from "@shopify/restyle"
-import { useFonts } from "expo-font"
-import { Stack } from "expo-router"
-import { StatusBar } from "expo-status-bar"
-import "react-native-reanimated"
+import theme from "@/src/theme/theme";
+import { ThemeProvider } from "@shopify/restyle";
+import { useFonts } from "expo-font";
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import "react-native-reanimated";
+
+if (__DEV__) {
+  require("../ReactotronConfig");
+}
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -26,15 +30,15 @@ export default function RootLayout() {
     PoppinsSemiBoldItalic: require("../assets/fonts/Poppins-SemiBoldItalic.ttf"),
     PoppinsThin: require("../assets/fonts/Poppins-Thin.ttf"),
     PoppinsThinItalic: require("../assets/fonts/Poppins-ThinItalic.ttf"),
-  })
+  });
 
   if (!loaded) {
     // Async font loading only occurs in development.
-    return null
+    return null;
   }
 
   return (
-    <ThemeContext.Provider value={theme}>
+    <ThemeProvider theme={theme}>
       <Stack
         screenOptions={{
           contentStyle: { backgroundColor: theme.colors.background },
@@ -45,6 +49,6 @@ export default function RootLayout() {
         <Stack.Screen name="sign-in" />
       </Stack>
       <StatusBar style="light" />
-    </ThemeContext.Provider>
-  )
+    </ThemeProvider>
+  );
 }

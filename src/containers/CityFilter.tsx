@@ -1,42 +1,41 @@
-import { ScrollView } from "react-native"
-import { Box } from "../components/Box"
-import { CategoryPill } from "../components/CategoryPill"
-import { SearchInput } from "../components/SearchInput"
-import { Category } from "../types"
+import { ScrollView } from "react-native";
+import { Box } from "../components/Box";
+import { CategoryPill } from "../components/CategoryPill";
+import { SearchInput } from "../components/SearchInput";
+import { Category } from "../types";
 
 type CityFilterProps = {
-  categories: Category[]
-  cityName: string
-  onChangeCityName: (cityName: string) => void
-  selectedCategoryId: string | null
-  onChangeCategoryId: (categoryId: string | null) => void
-}
-
+  categories?: Category[];
+  cityName: string;
+  onChangeCityName: (cityName: string) => void;
+  selectedCategoryId: string | null;
+  onChangeSelectedCategoryId: (id: string | null) => void;
+};
 export function CityFilter({
   categories,
   cityName,
   onChangeCityName,
   selectedCategoryId,
-  onChangeCategoryId,
+  onChangeSelectedCategoryId,
 }: CityFilterProps) {
   return (
     <Box>
       <Box paddingHorizontal="padding">
         <SearchInput
-          placeholder="Qual o seu destino?"
           value={cityName}
           onChangeText={onChangeCityName}
+          placeholder="Qual seu próximo destino?"
         />
       </Box>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <Box mt="s16" flexDirection="row" gap="s8" paddingHorizontal="padding">
-          {categories.map((category) => (
+          {categories?.map((category) => (
             <CategoryPill
               key={category.id}
+              active={category.id === selectedCategoryId}
               category={category}
-              active={selectedCategoryId === category.id}
               onPress={() =>
-                onChangeCategoryId(
+                onChangeSelectedCategoryId(
                   category.id === selectedCategoryId ? null : category.id
                 )
               }
@@ -45,5 +44,5 @@ export function CityFilter({
         </Box>
       </ScrollView>
     </Box>
-  )
+  );
 }

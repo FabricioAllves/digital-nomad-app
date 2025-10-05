@@ -1,9 +1,9 @@
-import { Redirect, Stack } from "expo-router"
+import { Redirect, Stack } from "expo-router";
 
-const isSignedIn = false
+const isSignedIn = false;
 export default function ProtectedLayout() {
   if (isSignedIn) {
-    return <Redirect href="/sign-in" />
+    return <Redirect href="/sign-in" />;
   }
 
   return (
@@ -12,5 +12,5 @@ export default function ProtectedLayout() {
     >
       <Stack.Screen name="(tabs)" />
     </Stack>
-  )
+  );
 }
