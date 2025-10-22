@@ -1,6 +1,6 @@
 import { useAppQuery } from "@/src/infra/operations/useAppQuery";
-import { useRepository } from "@/src/infra/RepositoryProvider";
 import { CityFindAllFilters } from "../ICityRepo";
+import { useRepository } from "@/src/infra/repositories/RepositoryProvider";
 
 export function useCityFindAll(filters: CityFindAllFilters) {
   const { city } = useRepository();

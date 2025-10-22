@@ -1,7 +1,8 @@
+import { AuthProvider } from "@/src/domain/auth/AuthContext";
 import { ConsoleFeedback } from "@/src/infra/feedbackService/adapters/Console/ConsoleFeedback";
 import { FeedbackProvider } from "@/src/infra/feedbackService/FeedbackProvider";
 import { InMemoryRepository } from "@/src/infra/repositories/adapters/InMemory";
-import { RepositoryProvider } from "@/src/infra/RepositoryProvider";
+import { RepositoryProvider } from "@/src/infra/repositories/RepositoryProvider";
 import theme from "@/src/ui/theme/theme";
 import { ThemeProvider } from "@shopify/restyle";
 import { useFonts } from "expo-font";
@@ -42,23 +43,25 @@ export default function RootLayout() {
   }
 
   return (
-    <FeedbackProvider value={ConsoleFeedback}>
-      <RepositoryProvider value={InMemoryRepository}>
-        <ThemeProvider theme={theme}>
-          <Stack
-            screenOptions={{
-              contentStyle: { backgroundColor: theme.colors.background },
-              headerShown: false,
-              fullScreenGestureEnabled: true,
-            }}
-          >
-            <Stack.Screen name="(protected)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-            <Stack.Screen name="sign-in" />
-          </Stack>
-          <StatusBar style="light" />
-        </ThemeProvider>
-      </RepositoryProvider>
-    </FeedbackProvider>
+    <AuthProvider>
+      <FeedbackProvider value={ConsoleFeedback}>
+        <RepositoryProvider value={InMemoryRepository}>
+          <ThemeProvider theme={theme}>
+            <Stack
+              screenOptions={{
+                contentStyle: { backgroundColor: theme.colors.background },
+                headerShown: false,
+                fullScreenGestureEnabled: true,
+              }}
+            >
+              <Stack.Screen name="(protected)" options={{ headerShown: false }} />
+              <Stack.Screen name="+not-found" />
+              <Stack.Screen name="sign-in" />
+            </Stack>
+            <StatusBar style="light" />
+          </ThemeProvider>
+        </RepositoryProvider>
+      </FeedbackProvider>
+    </AuthProvider>
   );
 }
